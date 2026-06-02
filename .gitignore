@@ -5,6 +5,7 @@ dist/
 build/
 .vercel/
 .wrangler/
+.claude/
 .env
 .env.local
 .env.*.local
