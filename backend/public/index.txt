@@ -1,0 +1,1 @@
+Harmonic API está pronta. Use as rotas em /api/*.
