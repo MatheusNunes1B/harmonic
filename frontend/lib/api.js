@@ -1,7 +1,6 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://harmonic-pearl.vercel.app';
 
 async function request(path, options = {}) {
-  if (!API_URL) throw new Error('Configure NEXT_PUBLIC_API_URL no ambiente do front-end.');
   const token = typeof window !== 'undefined' ? localStorage.getItem('harmonic_token') : null;
   const response = await fetch(`${API_URL}${path}`, {
     ...options,

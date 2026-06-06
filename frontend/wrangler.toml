@@ -4,6 +4,6 @@ compatibility_date = "2026-06-02"
 
 [vars]
 # Configure estas variáveis também no painel do Cloudflare Pages para produção:
-# NEXT_PUBLIC_SUPABASE_URL = "https://seu-projeto.supabase.co"
+# NEXT_PUBLIC_SUPABASE_URL = "https://vibyzyzqjldrnfewqokt.supabase.co"
 # NEXT_PUBLIC_SUPABASE_ANON_KEY = "sua-chave-anonima"
-# NEXT_PUBLIC_API_URL = "https://seu-backend.vercel.app"
+# NEXT_PUBLIC_API_URL = "https://harmonic-pearl.vercel.app"
