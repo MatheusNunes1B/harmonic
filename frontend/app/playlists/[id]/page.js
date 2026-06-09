@@ -1,13 +1,21 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import AppShell from '../../../components/AppShell';
 import MusicCard from '../../../components/MusicCard';
-import { featuredPlaylists, featuredTracks } from '../../../lib/mockData';
-
-export function generateStaticParams() {
-  return featuredPlaylists.map((playlist) => ({ id: playlist.id }));
-}
+import { featuredPlaylists } from '../../../lib/mockData';
+import { api } from '../../../lib/api';
 
 export default function PlaylistDetailPage({ params }) {
+  const [tracks, setTracks] = useState([]);
   const playlist = featuredPlaylists.find((item) => item.id === params.id) || featuredPlaylists[0];
+
+  useEffect(() => {
+    api.tracks()
+      .then((data) => setTracks(data.tracks ?? []))
+      .catch(() => setTracks([]));
+  }, []);
+
   return (
     <AppShell title={playlist.name} subtitle={playlist.description}>
       <section className={`rounded-[2rem] bg-gradient-to-br ${playlist.cover} p-8 text-black`}>
@@ -17,7 +25,9 @@ export default function PlaylistDetailPage({ params }) {
         <button className="mt-6 rounded-full bg-black px-6 py-3 font-black text-white">Tocar playlist</button>
       </section>
       <h2 className="mb-4 mt-8 text-2xl font-black">Faixas</h2>
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{featuredTracks.map((track) => <MusicCard key={track.id} track={track} />)}</div>
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        {tracks.map((track) => <MusicCard key={track.id} track={track} />)}
+      </div>
     </AppShell>
   );
 }
