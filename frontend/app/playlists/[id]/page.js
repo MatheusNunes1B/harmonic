@@ -6,6 +6,15 @@ import MusicCard from '../../../components/MusicCard';
 import { featuredPlaylists } from '../../../lib/mockData';
 import { api } from '../../../lib/api';
 
+export function generateStaticParams() {
+  return [
+    { id: 'focus' },
+    { id: 'neon' },
+    { id: 'calm' },
+    { id: 'fresh' },
+  ];
+}
+
 export default function PlaylistDetailPage({ params }) {
   const [tracks, setTracks] = useState([]);
   const playlist = featuredPlaylists.find((item) => item.id === params.id) || featuredPlaylists[0];
