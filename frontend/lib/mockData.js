@@ -1,12 +1,4 @@
-export const featuredTracks = [
-  { id: '1', title: 'Aurora de Vidro', artist: 'Lia Nova', album: 'Céu Elétrico', duration: '3:24', cover_url: '', audio_url: '', genre: 'Synth Pop' },
-  { id: '2', title: 'Pulso Lunar', artist: 'Orion Vale', album: 'Gravidade Zero', duration: '4:02', cover_url: '', audio_url: '', genre: 'Eletrônica' },
-  { id: '3', title: 'Maré Neon', artist: 'Maya Sol', album: 'Noites Líquidas', duration: '2:58', cover_url: '', audio_url: '', genre: 'Indie' },
-  { id: '4', title: 'Cidade Suspensa', artist: 'Duo Prisma', album: 'Horizonte Roxo', duration: '3:47', cover_url: '', audio_url: '', genre: 'Dream Beat' },
-  { id: '5', title: 'Frequência Verde', artist: 'Lia Nova', album: 'Céu Elétrico', duration: '3:11', cover_url: '', audio_url: '', genre: 'Pop' },
-  { id: '6', title: 'Eco Particular', artist: 'Orion Vale', album: 'Gravidade Zero', duration: '3:39', cover_url: '', audio_url: '', genre: 'Ambient' }
-];
-
+// frontend/lib/mockData.js
 export const featuredPlaylists = [
   { id: 'focus', name: 'Foco Astral', description: 'Batidas suaves para entrar no fluxo.', cover: 'from-purple-500 to-lime-300', tracks: 32 },
   { id: 'neon', name: 'Neon Drive', description: 'Som noturno para viagens urbanas.', cover: 'from-fuchsia-500 to-cyan-400', tracks: 24 },

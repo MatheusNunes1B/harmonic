@@ -1,9 +1,22 @@
+// frontend/app/page.tsx
+'use client';
+
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { featuredPlaylists, featuredTracks } from '../lib/mockData';
+import { featuredPlaylists } from '../lib/mockData';
+import { api } from '../lib/api';
 import MusicCard from '../components/MusicCard';
 import PlaylistCard from '../components/PlaylistCard';
 
 export default function LandingPage() {
+  const [tracks, setTracks] = useState([]);
+
+  useEffect(() => {
+    api.tracks()
+      .then((data) => setTracks(data.tracks ?? []))
+      .catch(() => setTracks([]));
+  }, []);
+
   return (
     <main className="min-h-screen bg-aura pb-20">
       <header className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6">
@@ -17,6 +30,7 @@ export default function LandingPage() {
           <Link href="/cadastro/" className="rounded-full bg-harmonic-lime px-4 py-2 font-bold text-black">Criar conta</Link>
         </nav>
       </header>
+
       <section className="mx-auto grid max-w-7xl items-center gap-10 px-6 py-14 lg:grid-cols-[1.1fr_.9fr]">
         <div>
           <p className="text-sm font-bold uppercase tracking-[0.4em] text-harmonic-lime">PWA musical</p>
@@ -27,19 +41,35 @@ export default function LandingPage() {
             <Link href="/app/" className="rounded-full border border-white/10 px-6 py-3 font-bold hover:border-harmonic-neon">Ver app</Link>
           </div>
         </div>
+
         <div className="glass rounded-[2rem] p-4 shadow-glow">
           <div className="rounded-[1.5rem] bg-harmonic-card p-5">
-            <div className="grid grid-cols-2 gap-4">
-              {featuredTracks.slice(0, 4).map((track) => <MusicCard key={track.id} track={track} />)}
-            </div>
+            {tracks.length === 0 ? (
+              <div className="grid grid-cols-2 gap-4">
+                {[0,1,2,3].map((i) => (
+                  <div key={i} className="rounded-3xl bg-harmonic-card p-4 animate-pulse h-40" />
+                ))}
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 gap-4">
+                {tracks.slice(0, 4).map((track) => <MusicCard key={track.id} track={track} />)}
+              </div>
+            )}
           </div>
         </div>
       </section>
+
       <section className="mx-auto max-w-7xl px-6">
         <h2 className="mb-5 text-2xl font-black">Playlists em destaque</h2>
-        <div className="grid gap-4 md:grid-cols-4">{featuredPlaylists.map((playlist) => <PlaylistCard key={playlist.id} playlist={playlist} />)}</div>
+        <div className="grid gap-4 md:grid-cols-4">
+          {featuredPlaylists.map((playlist) => <PlaylistCard key={playlist.id} playlist={playlist} />)}
+        </div>
       </section>
-      <footer className="mx-auto mt-16 max-w-7xl px-6 text-sm text-harmonic-muted">© 2026 Harmonic. Protótipo com músicas fictícias. <Link className="text-harmonic-lime" href="/termos/">Termos de uso</Link>.</footer>
+
+      <footer className="mx-auto mt-16 max-w-7xl px-6 text-sm text-harmonic-muted">
+        © 2026 Harmonic. Protótipo com músicas fictícias.{' '}
+        <Link className="text-harmonic-lime" href="/termos/">Termos de uso</Link>.
+      </footer>
     </main>
   );
 }
