@@ -1,10 +1,13 @@
 const ALLOWED_ORIGINS = [
-  'https://8833ae07.harmonic-coo.pages.dev',
   'https://harmonic-coo.pages.dev',
   'https://harmonic-pearl.vercel.app',
   'http://localhost:3000',
   'http://localhost:3001',
-  'https://harmonic-coo.pages.dev',
+];
+
+// Aceita qualquer preview do Cloudflare Pages automaticamente
+const ALLOWED_PATTERNS = [
+  /^https:\/\/[a-z0-9]+\.harmonic-coo\.pages\.dev$/,
 ];
 
 export function send(res, status, body) {
@@ -13,12 +16,17 @@ export function send(res, status, body) {
 
 export function cors(req, res) {
   const origin = req.headers.origin || '';
-  const allowed = ALLOWED_ORIGINS.includes(origin)
+
+  const allowed =
+    ALLOWED_ORIGINS.includes(origin) ||
+    ALLOWED_PATTERNS.some((pattern) => pattern.test(origin));
+
+  const allowedOrigin = allowed
     ? origin
     : (process.env.FRONTEND_URL || '');
 
-  if (allowed) {
-    res.setHeader('Access-Control-Allow-Origin', allowed);
+  if (allowedOrigin) {
+    res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
   }
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
