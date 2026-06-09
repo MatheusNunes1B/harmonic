@@ -1,4 +1,12 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://harmonic-pearl.vercel.app';
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+if (!API_URL) {
+  throw new Error(
+    'Configure NEXT_PUBLIC_API_URL no ambiente do front-end.\n' +
+    'Crie frontend/.env.local com:\n' +
+    'NEXT_PUBLIC_API_URL=https://sua-url-do-backend.vercel.app'
+  );
+}
 
 async function request(path, options = {}) {
   const token = typeof window !== 'undefined' ? localStorage.getItem('harmonic_token') : null;
@@ -16,19 +24,19 @@ async function request(path, options = {}) {
 }
 
 export const api = {
-  register: (payload) => request('/api/auth/register', { method: 'POST', body: JSON.stringify(payload) }),
-  login: (payload) => request('/api/auth/login', { method: 'POST', body: JSON.stringify(payload) }),
-  profile: () => request('/api/users/profile'),
-  updateProfile: (payload) => request('/api/users/profile', { method: 'PUT', body: JSON.stringify(payload) }),
-  tracks: () => request('/api/tracks'),
-  playlists: () => request('/api/playlists'),
-  createPlaylist: (payload) => request('/api/playlists', { method: 'POST', body: JSON.stringify(payload) }),
-  updatePlaylist: (id, payload) => request(`/api/playlists/${id}`, { method: 'PUT', body: JSON.stringify(payload) }),
-  deletePlaylist: (id) => request(`/api/playlists/${id}`, { method: 'DELETE' }),
-  addTrack: (id, track_id) => request(`/api/playlists/${id}/tracks`, { method: 'POST', body: JSON.stringify({ track_id }) }),
-  removeTrack: (id, track_id) => request(`/api/playlists/${id}/tracks?track_id=${track_id}`, { method: 'DELETE' }),
-  likedTracks: () => request('/api/liked-tracks'),
-  likeTrack: (track_id) => request('/api/liked-tracks', { method: 'POST', body: JSON.stringify({ track_id }) }),
-  unlikeTrack: (track_id) => request(`/api/liked-tracks?track_id=${track_id}`, { method: 'DELETE' }),
-  acceptTerms: () => request('/api/terms/accept', { method: 'POST' })
+  register:       (payload)      => request('/api/auth/register', { method: 'POST', body: JSON.stringify(payload) }),
+  login:          (payload)      => request('/api/auth/login', { method: 'POST', body: JSON.stringify(payload) }),
+  profile:        ()             => request('/api/users/profile'),
+  updateProfile:  (payload)      => request('/api/users/profile', { method: 'PUT', body: JSON.stringify(payload) }),
+  tracks:         ()             => request('/api/tracks'),
+  playlists:      ()             => request('/api/playlists'),
+  createPlaylist: (payload)      => request('/api/playlists', { method: 'POST', body: JSON.stringify(payload) }),
+  updatePlaylist: (id, payload)  => request(`/api/playlists/${id}`, { method: 'PUT', body: JSON.stringify(payload) }),
+  deletePlaylist: (id)           => request(`/api/playlists/${id}`, { method: 'DELETE' }),
+  addTrack:       (id, track_id) => request(`/api/playlists/${id}/tracks`, { method: 'POST', body: JSON.stringify({ track_id }) }),
+  removeTrack:    (id, track_id) => request(`/api/playlists/${id}/tracks?track_id=${track_id}`, { method: 'DELETE' }),
+  likedTracks:    ()             => request('/api/liked-tracks'),
+  likeTrack:      (track_id)     => request('/api/liked-tracks', { method: 'POST', body: JSON.stringify({ track_id }) }),
+  unlikeTrack:    (track_id)     => request(`/api/liked-tracks?track_id=${track_id}`, { method: 'DELETE' }),
+  acceptTerms:    ()             => request('/api/terms/accept', { method: 'POST' })
 };
